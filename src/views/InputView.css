@@ -1,0 +1,13 @@
+.InputView {
+  fill: #fff1d7;
+  stroke-width: 2;
+  stroke: #e6ebf1;
+}
+
+input {
+  border: 1px solid #ccc;
+  width: 100%;
+  padding: 6px 0px;
+  margin-top: 5px;
+  border-radius: 3px;
+}

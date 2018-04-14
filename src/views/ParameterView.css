@@ -1,0 +1,11 @@
+.Parameter {
+  fill: white;
+  stroke-width: 2;
+  stroke: #cfd7df;
+}
+
+.Parameter:hover {
+  fill: #ddd;
+  stroke: #bbb;
+  cursor: pointer;
+}
