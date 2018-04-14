@@ -18,13 +18,10 @@ class OperationView extends Component {
     ]
 
     return [
-      <rect className="Operation" x={operation.x} y={operation.y} width="120" height="80" rx="5" ry="5" />,
+      <rect className="Operation" x={operation.x} y={operation.y} width="80" height="80" rx="5" ry="5" />,
       ...parameters.map(this.renderParameter.bind(this)),
-      <text x={operation.x} y={operation.y} fontFamily="Sans-serif" fontSize="15">
+      <text className="OperationText" x={operation.x + 30} y={operation.y + 50}>
         {operation.name}
-      </text>,
-      <text x={operation.x} y={operation.y + 10} fontFamily="Sans-serif" fontSize="15">
-        Value: {operation.outputs[0].value}
       </text>
     ];
   }

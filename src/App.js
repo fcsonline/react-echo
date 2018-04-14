@@ -10,8 +10,8 @@ import DashboardView from './views/DashboardView';
 
 class App extends Component {
   componentWillMount () {
-    this.sum1 = new Sum('Sum1');
-    this.sum2 = new Sum('Sum2');
+    this.sum1 = new Sum('+');
+    this.sum2 = new Sum('+');
 
     this.sum1.inputs[0].value = 5;
     this.sum1.inputs[1].value = 3;

@@ -9,3 +9,7 @@
   stroke: #bbb;
   cursor: pointer;
 }
+
+.ParameterText {
+  fill: #999;
+}

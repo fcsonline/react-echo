@@ -6,9 +6,9 @@ export default class Sum extends Operation {
   constructor(name) {
     super(name, [], [])
 
-    this.paramA = new Parameter('integer', 'a', this.x + 25, this.y);
-    this.paramB = new Parameter('integer', 'b', this.x + 95, this.y);
-    this.output = new Parameter('integer', 'result', this.x + 60, this.y + 80);
+    this.paramA = new Parameter('integer', 'a', this.x, this.y + 40, 'bottom-left');
+    this.paramB = new Parameter('integer', 'b', this.x + 80, this.y + 40, 'bottom-right');
+    this.output = new Parameter('integer', 'result', this.x + 40, this.y + 80, 'bottom-right');
 
     this.reaction = reaction(
       () => [

@@ -1,6 +1,12 @@
 .Operation {
-  fill: white;
+  fill: #eeeeee;
   stroke-width: 2;
-  stroke: #e6ebf1;
+  stroke: #ddd;
   border-radius: 5px;
+}
+
+.OperationText {
+  font-family: Sans-serif;
+  font-size: 30px;
+  font-weight: 700;
 }
