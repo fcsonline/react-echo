@@ -8,4 +8,14 @@ export default class Operation extends Node {
     this.inputs = inputs;
     this.outputs = outputs;
   }
+
+  // Move to parent
+  serialize () {
+    return {
+      id: this.id,
+      kind: 'Operation',
+      inputs: this.inputs.map((input) => input.serialize()),
+      outputs: this.outputs.map((output) => output.serialize()),
+    }
+  }
 }

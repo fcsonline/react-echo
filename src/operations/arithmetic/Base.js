@@ -1,8 +1,8 @@
-import Parameter from '../lib/Parameter';
-import Operation from '../lib/Operation';
+import Parameter from '../../lib/Parameter';
+import Operation from '../../lib/Operation';
 import { reaction } from "mobx";
 
-export default class Sum extends Operation {
+export default class Arithmetic extends Operation {
   constructor(name) {
     super(name, [], [])
 
@@ -27,16 +27,6 @@ export default class Sum extends Operation {
   }
 
   compute (a, b) {
-    return a + b;
-  }
-
-  // Move to parent
-  serialize () {
-    return {
-      id: this.id,
-      kind: 'Operation',
-      inputs: this.inputs.map((input) => input.serialize()),
-      outputs: this.outputs.map((output) => output.serialize()),
-    }
+    throw new Error('Abstract class');
   }
 }

@@ -12,8 +12,13 @@ class InputView extends Component {
   }
 
   renderParameter (parameter) {
+    const { input: operation } = this.props
+
     return (
-      <ParameterView parameter={parameter} />
+      <ParameterView
+        key={`${operation.id}-${parameter.id}`}
+        parameter={parameter}
+      />
     )
   }
 
