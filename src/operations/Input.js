@@ -6,8 +6,14 @@ class Input extends Operation {
   constructor(name) {
     super(name, [], [])
 
-    this.output = new Parameter('integer', 'result', this.x + 60, this.y + 80, 'bottom-right');
+    this.output = new Parameter('integer', 'result', 'bottom-right');
     this.outputs.push(this.output);
+
+    this.offsets = {
+      result: { x: 60, y: 80},
+    };
+
+    this.updateParameterPositions();
   }
 
   // Move to parent

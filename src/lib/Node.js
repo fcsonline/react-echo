@@ -1,5 +1,6 @@
 import uniqid from 'uniqid';
 import {observer} from "mobx-react";
+import { decorate, observable } from "mobx"
 
 class Node {
   constructor() {
@@ -9,6 +10,9 @@ class Node {
   }
 }
 
-observer(Node);
+decorate(Node, {
+  x: observable,
+  y: observable,
+})
 
 export default Node;

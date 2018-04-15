@@ -2,11 +2,9 @@ import { decorate, observable } from "mobx"
 import Node from './Node';
 
 class Parameter extends Node {
-  constructor(type, name, x, y, anchor) {
+  constructor(type, name, anchor) {
     super()
 
-    this.x = x;
-    this.y = y;
     this.anchor = anchor;
     this.type = type;
     this.name = name;

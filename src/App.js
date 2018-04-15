@@ -6,6 +6,7 @@ import Connection from './lib/Connection';
 import Input from './operations/Input';
 import Clock from './operations/Clock';
 import Counter from './operations/Counter';
+import Greater from './operations/relational/Greater';
 import Sum from './operations/arithmetic/Sum';
 
 import Pi from './operations/constant/Pi';
@@ -18,13 +19,16 @@ class App extends Component {
     this.sum1 = new Sum('+');
     this.sum2 = new Sum('+');
     this.clock = new Clock('\u231b');
-    this.counter = new Counter(' \u2807');
+    this.counter = new Counter('  \u2807');
+    this.greater = new Greater('>');
 
     this.sum1.inputs[0].value = 5;
     this.sum1.inputs[1].value = 3;
 
     this.sum2.inputs[0].value = 50;
     this.sum2.inputs[1].value = 50;
+
+    this.greater.inputs[1].value = 20;
 
     this.input1 = new Input('Foo');
 
@@ -48,13 +52,18 @@ class App extends Component {
       this.counter.inputs[0]
     )
 
+    this.c5 = new Connection(
+      this.counter.outputs[0],
+      this.greater.inputs[0]
+    )
+
     // this.foo = 0;
     // setInterval(() => {
     //   this.sum2.inputs[0].value = this.foo;
     //   this.foo++;
     // }, 2000);
-    this.operations = [this.sum1, this.sum2, this.const1, this.clock, this.counter]
-    this.connections = [this.c1, this.c2, this.c3, this.c4]
+    this.operations = [this.sum1, this.sum2, this.const1, this.clock, this.counter, this.greater]
+    this.connections = [this.c1, this.c2, this.c3, this.c4, this.c5]
     this.inputs = [this.input1]
     // this.operations = []
     // this.connections = []

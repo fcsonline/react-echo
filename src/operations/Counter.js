@@ -6,8 +6,13 @@ export default class Counter extends Operation {
   constructor(name) {
     super(name, [], [])
 
-    this.input = new Parameter('signal', 'a', this.x, this.y + 40, 'bottom-left');
-    this.output = new Parameter('integer', 'result', this.x + 40, this.y + 80, 'bottom-right');
+    this.input = new Parameter('signal', 'a', 'top-left');
+    this.output = new Parameter('integer', 'result', 'bottom-right');
+
+    this.offsets = {
+      a: { x: 40, y: 0},
+      result: { x: 40, y: 80},
+    };
 
     this.reaction = reaction(
       () => [
@@ -20,5 +25,7 @@ export default class Counter extends Operation {
 
     this.inputs.push(this.input);
     this.outputs.push(this.output);
+
+    this.updateParameterPositions();
   }
 }

@@ -1,11 +1,10 @@
 import { reaction } from "mobx"
+import { decorate, observable } from "mobx"
 import uniqid from 'uniqid';
 
 class Connection {
   constructor(input, output) {
     if (input.type !== output.type && output.type !== 'signal') {
-      console.log('FCS1', input.type)
-      console.log('FCS2', output.type)
       throw new Error('incompatible type for connection');
     }
 
@@ -31,5 +30,10 @@ class Connection {
     }
   }
 }
+
+decorate(Connection, {
+  input: observable,
+  output: observable,
+})
 
 export default Connection;

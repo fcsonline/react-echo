@@ -74,7 +74,7 @@ class DashboardView extends Component {
 
     return (
       <div className="Dashboard" onKeyDown={this.onKeyDown.bind(this)}>
-        <svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 2000 1000" xmlns="http://www.w3.org/2000/svg">
           {operations.map(this.renderOperation.bind(this))}
           {inputs.map(this.renderInput.bind(this))}
           {connections.map(this.renderConnection.bind(this))}

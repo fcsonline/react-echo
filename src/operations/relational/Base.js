@@ -2,13 +2,13 @@ import Parameter from '../../lib/Parameter';
 import Operation from '../../lib/Operation';
 import { reaction } from "mobx";
 
-export default class Arithmetic extends Operation {
+export default class Relational extends Operation {
   constructor(name) {
     super(name, [], [])
 
     this.paramA = new Parameter('integer', 'a', 'bottom-left');
     this.paramB = new Parameter('integer', 'b', 'bottom-right');
-    this.output = new Parameter('integer', 'result', 'bottom-right');
+    this.output = new Parameter('bool', 'result', 'bottom-right');
 
     this.offsets = {
       a: { x: 0, y: 40},
