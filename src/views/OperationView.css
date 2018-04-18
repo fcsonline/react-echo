@@ -15,4 +15,5 @@
   font-family: Sans-serif;
   font-size: 30px;
   font-weight: 700;
+  pointer-events: none;
 }

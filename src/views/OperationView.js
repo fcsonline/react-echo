@@ -18,32 +18,31 @@ class OperationView extends Component {
       y: e.pageY
     }
 
-    console.log('Drag', e)
-    console.log('Drag2', this)
-
     document.addEventListener('mousemove', this.handleMouseMove);
   };
 
   handleMouseUp (e) {
+    const { operation } = this.props
+
+    operation.x = Math.round(operation.x / 10) * 10;
+    operation.y = Math.round(operation.y / 10) * 10;
+
     document.removeEventListener('mousemove', this.handleMouseMove);
+
     this.coords = {};
-    console.log('Drop', e)
   };
 
   handleMouseMove (e) {
     const { operation } = this.props
 
-    console.log('Move', e)
-    console.log('Move2', this.coords)
-    console.log('Move3', operation.x, operation.y)
     const xDiff = this.coords.x - e.pageX;
     const yDiff = this.coords.y - e.pageY;
 
     this.coords.x = e.pageX;
     this.coords.y = e.pageY;
 
-    operation.x = operation.x - xDiff;
-    operation.y = operation.y - yDiff;
+    operation.x = ((operation.x - xDiff) / 10) * 10;
+    operation.y = ((operation.y - yDiff) / 10) * 10;
   };
 
   renderParameter (parameter) {
@@ -72,13 +71,13 @@ class OperationView extends Component {
         className={`Operation ${active ? ' OperationActive': ''}`}
         x={operation.x}
         y={operation.y}
-        width="80"
-        height="80"
+        width="60"
+        height="60"
         rx="5"
         ry="5"
       />,
       ...parameters.map(this.renderParameter.bind(this)),
-      <text className="OperationText" x={operation.x + 30} y={operation.y + 50}>
+      <text className="OperationText" x={operation.x + 30} y={operation.y + 30} text-anchor="middle" alignment-baseline="central">
         {operation.name}
       </text>
     ];

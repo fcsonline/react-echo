@@ -12,4 +12,5 @@
 
 .ParameterText {
   fill: #999;
+  pointer-events: none;
 }

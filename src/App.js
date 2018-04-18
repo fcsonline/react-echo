@@ -19,7 +19,7 @@ class App extends Component {
     this.sum1 = new Sum('+');
     this.sum2 = new Sum('+');
     this.clock = new Clock('\u231b');
-    this.counter = new Counter('  \u2807');
+    this.counter = new Counter('\u2807');
     this.greater = new Greater('>');
 
     this.sum1.inputs[0].value = 5;

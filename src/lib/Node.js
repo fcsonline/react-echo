@@ -5,8 +5,8 @@ import { decorate, observable } from "mobx"
 class Node {
   constructor() {
     this.id = uniqid();
-    this.x = Math.round(Math.random() * 800);
-    this.y = Math.round(Math.random() * 600);
+    this.x = Math.round(Math.random() * 80) * 10;
+    this.y = Math.round(Math.random() * 60) * 10;
   }
 }
 

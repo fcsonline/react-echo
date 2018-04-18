@@ -6,7 +6,7 @@ class Input extends Operation {
   constructor(name) {
     super(name, [], [])
 
-    this.output = new Parameter('integer', 'result', 'bottom-right');
+    this.output = new Parameter('integer', 'result', 'bottom');
     this.outputs.push(this.output);
 
     this.offsets = {

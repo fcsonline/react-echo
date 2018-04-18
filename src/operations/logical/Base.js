@@ -11,9 +11,9 @@ export default class Logical extends Operation {
     this.output = new Parameter('bool', 'result', 'bottom-right');
 
     this.offsets = {
-      a: { x: 0, y: 40},
-      b: { x: 80, y: 40},
-      result: { x: 40, y: 80},
+      a: { x: 0, y: 30},
+      b: { x: 30, y: 30},
+      result: { x: 30, y: 30},
     };
 
     this.reaction = reaction(

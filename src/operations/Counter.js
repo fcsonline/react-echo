@@ -6,12 +6,12 @@ export default class Counter extends Operation {
   constructor(name) {
     super(name, [], [])
 
-    this.input = new Parameter('signal', 'a', 'top-left');
-    this.output = new Parameter('integer', 'result', 'bottom-right');
+    this.input = new Parameter('signal', 'a', 'top');
+    this.output = new Parameter('integer', 'result', 'bottom');
 
     this.offsets = {
-      a: { x: 40, y: 0},
-      result: { x: 40, y: 80},
+      a: { x: 30, y: 0 },
+      result: { x: 30, y: 60 },
     };
 
     this.reaction = reaction(

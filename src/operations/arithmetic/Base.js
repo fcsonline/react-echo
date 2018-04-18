@@ -6,14 +6,14 @@ export default class Arithmetic extends Operation {
   constructor(name) {
     super(name, [], [])
 
-    this.paramA = new Parameter('integer', 'a', 'bottom-left');
-    this.paramB = new Parameter('integer', 'b', 'bottom-right');
-    this.output = new Parameter('integer', 'result', 'bottom-right');
+    this.paramA = new Parameter('integer', 'a', 'left');
+    this.paramB = new Parameter('integer', 'b', 'right');
+    this.output = new Parameter('integer', 'result', 'bottom');
 
     this.offsets = {
-      a: { x: 0, y: 40},
-      b: { x: 80, y: 40},
-      result: { x: 40, y: 80},
+      a: { x: 0, y: 30},
+      b: { x: 60, y: 30},
+      result: { x: 30, y: 60},
     };
 
     this.reaction = reaction(
