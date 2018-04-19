@@ -1,10 +1,9 @@
 import Parameter from '../../lib/Parameter';
 import Operation from '../../lib/Operation';
-import { reaction } from "mobx";
 
 export default class Constant extends Operation {
-  constructor(name) {
-    super(name, [], [])
+  constructor(options) {
+    super(options)
 
     this.output = new Parameter('integer', 'result', 'bottom');
     this.output.value = this.evaluate();

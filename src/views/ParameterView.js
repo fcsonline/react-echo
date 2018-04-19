@@ -8,7 +8,7 @@ class ParameterView extends Component {
     const offsets = {
       'top':  { x: 10, y: -20, anchor: 'left' },
       'bottom':  { x: 10, y: 20, anchor: 'left' },
-      'left':  { x: -20, y: 10, anchor: 'right' },
+      'left':  { x: -25, y: 15, anchor: 'right' },
       'right':  { x: 10, y: -10, anchor: 'left' }
     }
 

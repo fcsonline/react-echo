@@ -3,8 +3,8 @@ import Operation from '../../lib/Operation';
 import { reaction } from "mobx";
 
 export default class Logical extends Operation {
-  constructor(name) {
-    super(name, [], [])
+  constructor(options) {
+    super(options)
 
     this.paramA = new Parameter('bool', 'a', 'bottom-left');
     this.paramB = new Parameter('bool', 'b', 'bottom-right');

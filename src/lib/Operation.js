@@ -2,12 +2,12 @@ import Node from './Node';
 import { reaction } from "mobx";
 
 export default class Operation extends Node {
-  constructor(name, inputs, outputs) {
-    super()
+  constructor(options) {
+    super(options)
 
-    this.name = name;
-    this.inputs = inputs;
-    this.outputs = outputs;
+    this.name = options.name;
+    this.inputs = [];
+    this.outputs = [];
     this.offsets = {};
 
     this.reaction = reaction(
@@ -33,10 +33,9 @@ export default class Operation extends Node {
     });
   }
 
-  // Move to parent
   serialize () {
     return {
-      id: this.id,
+      ...super.serialize(),
       kind: 'Operation',
       inputs: this.inputs.map((input) => input.serialize()),
       outputs: this.outputs.map((output) => output.serialize()),

@@ -3,8 +3,8 @@ import Operation from '../lib/Operation';
 import { reaction } from "mobx";
 
 export default class Counter extends Operation {
-  constructor(name) {
-    super(name, [], [])
+  constructor(options) {
+    super(options)
 
     this.input = new Parameter('signal', 'a', 'top');
     this.output = new Parameter('integer', 'result', 'bottom');

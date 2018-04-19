@@ -3,8 +3,8 @@ import Operation from '../../lib/Operation';
 import { reaction } from "mobx";
 
 export default class Arithmetic extends Operation {
-  constructor(name) {
-    super(name, [], [])
+  constructor(options) {
+    super(options)
 
     this.paramA = new Parameter('integer', 'a', 'left');
     this.paramB = new Parameter('integer', 'b', 'right');
