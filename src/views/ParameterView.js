@@ -6,10 +6,10 @@ class ParameterView extends Component {
   getTextOffsets () {
     const { parameter } = this.props
     const offsets = {
-      'top':  { x: 10, y: -20, anchor: 'left' },
-      'bottom':  { x: 10, y: 20, anchor: 'left' },
-      'left':  { x: -25, y: 15, anchor: 'right' },
-      'right':  { x: 10, y: -10, anchor: 'left' }
+      'top':  { x: 10, y: -20, anchor: 'start' },
+      'bottom':  { x: 10, y: 20, anchor: 'start' },
+      'left':  { x: -10, y: 20, anchor: 'end' },
+      'right':  { x: 10, y: -10, anchor: 'start' }
     }
 
     return offsets[parameter.anchor] || { x: 0, y: 0};
