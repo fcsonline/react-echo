@@ -1,6 +1,6 @@
-import Arithmetic from './Base';
+import Logical from './Base';
 
-export default class And extends Arithmetic {
+export default class And extends Logical {
   compute (a, b) {
     return a && b;
   }
