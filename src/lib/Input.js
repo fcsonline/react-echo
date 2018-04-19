@@ -1,6 +1,6 @@
 import { decorate, observable } from "mobx"
-import Parameter from '../lib/Parameter';
-import Operation from '../lib/Operation';
+import Parameter from './Parameter';
+import Operation from './Operation';
 
 class Input extends Operation {
   constructor(options) {
@@ -19,10 +19,8 @@ class Input extends Operation {
   // Move to parent
   serialize () {
     return {
-      id: this.id,
-      kind: 'Input',
-      inputs: this.inputs.map((input) => input.serialize()),
-      outputs: this.outputs.map((output) => output.serialize()),
+      ...super.serialize(),
+      kind: 'Input'
     }
   }
 }

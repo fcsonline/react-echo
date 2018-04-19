@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import {observer} from "mobx-react";
 import './DashboardView.css';
 
+import Operation from '../lib/Operation';
+import Connection from '../lib/Connection';
+import Input from '../lib/Input';
+
 import InputView from './InputView';
 import ConnectionView from './ConnectionView';
 import OperationView from './OperationView';
@@ -66,11 +70,10 @@ class DashboardView extends Component {
   }
 
   render() {
-    const {
-      operations,
-      inputs,
-      connections
-    } = this.props
+    const { objects } = this.props;
+    const operations = objects.filter((o) => (o instanceof Operation && !(o instanceof Input))); // TODO improve
+    const connections = objects.filter((o) => o instanceof Connection);
+    const inputs = objects.filter((o) => o instanceof Input);
 
     return (
       <div className="Dashboard" onKeyDown={this.onKeyDown.bind(this)}>

@@ -3,7 +3,8 @@ import {observer} from "mobx-react";
 import './App.css';
 
 import Connection from './lib/Connection';
-import Input from './operations/Input';
+import Input from './lib/Input';
+
 import Clock from './operations/Clock';
 import Counter from './operations/Counter';
 import Greater from './operations/relational/Greater';
@@ -57,37 +58,23 @@ class App extends Component {
       this.greater.inputs[0]
     )
 
-    // this.foo = 0;
-    // setInterval(() => {
-    //   this.sum2.inputs[0].value = this.foo;
-    //   this.foo++;
-    // }, 2000);
-    this.operations = [this.sum1, this.sum2, this.const1, this.clock, this.counter, this.greater]
-    this.connections = [this.c1, this.c2, this.c3, this.c4, this.c5]
-    this.inputs = [this.input1]
-    // this.operations = []
-    // this.connections = []
-    // this.inputs = []
+    this.objects = [
+      this.sum1, this.sum2, this.const1, this.clock, this.counter, this.greater,
+      this.c1, this.c2, this.c3, this.c4, this.c5,
+      this.input1
+    ]
   }
 
   onClickSerialize () {
-    const objects = [
-      ...this.operations,
-      ...this.connections,
-      ...this.inputs
-    ];
-    const serialized = objects.map((object) => object.serialize());
+    const serialized = this.objects.map((object) => object.serialize());
 
     localStorage.setItem('echo', JSON.stringify(serialized));
   }
 
   onClickRestore() {
     const data = localStorage.getItem('echo');
-    const serialized = JSON.parse(data);
 
-    this.operations = serialized.filter((object) => object.kind === 'Operation');
-    this.connections = serialized.filter((object) => object.kind === 'Connection');
-    this.inputs = serialized.filter((object) => object.kind === 'Input');
+    this.objects= JSON.parse(data);
   }
 
   render() {
@@ -100,11 +87,7 @@ class App extends Component {
           <button onClick={this.onClickRestore.bind(this)}>Restore</button>
         </header>
         <div className="Wrapper">
-          <DashboardView
-            operations={this.operations}
-            inputs={this.inputs}
-            connections={this.connections}
-          />
+          <DashboardView objects={this.objects} />
         </div>
       </div>
     );
