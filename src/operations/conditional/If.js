@@ -4,7 +4,11 @@ import { reaction } from "mobx";
 
 export default class If extends Operation {
   constructor(options) {
-    super(options)
+    super({
+      name: 'if',
+      rotate: true,
+      ...options
+    })
 
     this.condition = new Parameter('bool', 'condition', 'top');
     this.paramA = new Parameter('integer', 'a', 'left');
@@ -26,7 +30,10 @@ export default class If extends Operation {
       ],
       (params, reaction) => {
         const [condition, a, b] = params;
+
+        this.flashComputing();
         this.outputs[0].value = condition ? a : b;
+        this.flashbackComputing();
       }
     );
 

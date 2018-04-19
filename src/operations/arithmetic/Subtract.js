@@ -1,14 +1,14 @@
 import Arithmetic from './Base';
 
-export default class Sum extends Arithmetic {
+export default class Subtract extends Arithmetic {
   constructor(options) {
     super({
-      name: '+',
+      name: '-',
       ...options
     })
   }
 
   compute (a, b) {
-    return a + b;
+    return a - b;
   }
 }

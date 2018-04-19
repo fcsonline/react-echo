@@ -19,7 +19,9 @@ export default class Counter extends Operation {
         this.input.value
       ],
       (params, reaction) => {
+        this.flashComputing();
         this.outputs[0].value++;
+        this.flashbackComputing();
       }
     );
 

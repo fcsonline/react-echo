@@ -16,8 +16,21 @@
   color: white;
 }
 
-.Title {
-  font-size: 1.5em;
+h1.Title {
+  font-size: 15px;
+}
+
+h2.Title {
+  font-size: 13px;
+}
+
+.Operations button {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  border-width: 2px;
+  font-size: 23px;
+  font-weight: 500;
 }
 
 .Wrapper {

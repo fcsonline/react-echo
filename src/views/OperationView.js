@@ -62,19 +62,21 @@ class OperationView extends Component {
       ...operation.inputs,
       ...operation.outputs
     ]
+    const computing = operation.computing;
 
     return [
       <rect
         onClick={() => onClick(operation)}
         onMouseDown={this.handleMouseDown.bind(this)}
         onMouseUp={this.handleMouseUp.bind(this)}
-        className={`Operation ${active ? ' OperationActive': ''}`}
+        className={`Operation ${active ? ' OperationActive': ''} ${computing ? ' OperationComputing': ''}`}
         x={operation.x}
         y={operation.y}
         width="60"
         height="60"
         rx="5"
         ry="5"
+        transform={operation.rotate ? `rotate(45 ${operation.x + 30} ${operation.y + 30})` : ''}
       />,
       ...parameters.map(this.renderParameter.bind(this)),
       <text className="OperationText" x={operation.x + 30} y={operation.y + 30} text-anchor="middle" alignment-baseline="central">

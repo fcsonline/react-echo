@@ -9,6 +9,27 @@
 .OperationActive {
   fill: wheat;
   stroke: #aaa;
+  animation-name: example;
+  animation-duration: 4s;
+}
+
+.OperationComputing {
+  fill: rgba(246, 226, 187, 1);
+  animation-name: computing;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+}
+
+@keyframes computing {
+  0% {
+    fill: #eeeeee;
+  }
+  50% {
+    fill: rgba(246, 226, 187, 1);
+  }
+  100% {
+    fill: #eeeeee;
+  }
 }
 
 .OperationText {

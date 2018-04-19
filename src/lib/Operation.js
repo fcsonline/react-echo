@@ -1,11 +1,14 @@
 import Node from './Node';
+import { decorate, observable } from "mobx"
 import { reaction } from "mobx";
 
-export default class Operation extends Node {
+class Operation extends Node {
   constructor(options) {
     super(options)
 
     this.name = options.name;
+    this.rotate = options.rotate;
+    this.computing = false;
     this.inputs = [];
     this.outputs = [];
     this.offsets = {};
@@ -18,6 +21,17 @@ export default class Operation extends Node {
       (params, reaction) => {
         this.updateParameterPositions();
       }
+    );
+  }
+
+  flashComputing () {
+    this.computing = true;
+  }
+
+  flashbackComputing () {
+    setTimeout(
+      () => this.computing = false,
+      900
     );
   }
 
@@ -42,3 +56,9 @@ export default class Operation extends Node {
     }
   }
 }
+
+decorate(Operation, {
+  computing: observable,
+})
+
+export default Operation;

@@ -3,12 +3,12 @@ import Constant from './Base';
 export default class Pi extends Constant {
   constructor(options) {
     super({
-      name: 'π',
+      name: 'e',
       ...options
     })
   }
 
   evaluate () {
-    return Math.PI;
+    return Math.E;
   }
 }

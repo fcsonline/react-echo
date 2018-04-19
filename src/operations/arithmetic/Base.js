@@ -23,7 +23,10 @@ export default class Arithmetic extends Operation {
       ],
       (params, reaction) => {
         const [a, b] = params;
+
+        this.flashComputing();
         this.outputs[0].value = this.compute(a, b);
+        this.flashbackComputing();
       }
     );
 
