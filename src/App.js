@@ -10,6 +10,7 @@ import Clock from './operations/Clock';
 import Counter from './operations/Counter';
 import Greater from './operations/relational/Greater';
 import Sum from './operations/arithmetic/Sum';
+import Multiply from './operations/arithmetic/Multiply';
 import Subtract from './operations/arithmetic/Subtract';
 import If from './operations/conditional/If';
 
@@ -20,10 +21,11 @@ import DashboardView from './views/DashboardView';
 
 class App extends Component {
   componentWillMount () {
-    this.const1 = new Pi({ x: 580, y: 100 });
+    this.const1 = new Pi({ x: 680, y: 100 });
     this.const2 = new E({ x: 380, y: 700 });
-    this.sum1 = new Sum({ x: 430, y: 400 });
+    this.sum1 = new Sum({ x: 430, y: 350 });
     this.subtract1 = new Subtract({ x: 530, y: 500 });
+    this.mul1 = new Multiply({ x: 630, y: 350 });
     this.if1 = new If({ name: 'if', x: 150, y: 880 });
     this.clock = new Clock({ name: '\u231b', x: 100, y: 100 });
     this.counter = new Counter({ name: '\u2807', x: 100, y: 250 });
@@ -31,6 +33,8 @@ class App extends Component {
 
     this.sum1.inputs[0].value = 3;
     this.sum1.inputs[1].value = 5;
+
+    this.mul1.inputs[0].value = -5;
 
     this.subtract1.inputs[0].value = 50;
     this.subtract1.inputs[1].value = 50;
@@ -51,7 +55,7 @@ class App extends Component {
 
     this.c3 = new Connection(
       this.const1.outputs[0],
-      this.subtract1.inputs[1]
+      this.mul1.inputs[1]
     )
 
     this.c4 = new Connection(
@@ -79,9 +83,14 @@ class App extends Component {
       this.if1.inputs[2]
     )
 
+    this.c9 = new Connection(
+      this.mul1.outputs[0],
+      this.subtract1.inputs[1]
+    )
+
     this.objects = [
-      this.sum1, this.subtract1, this.if1, this.const1, this.const2, this.clock, this.counter, this.greater,
-      this.c1, this.c2, this.c3, this.c4, this.c5, this.c6, this.c7, this.c8,
+      this.sum1, this.mul1, this.subtract1, this.if1, this.const1, this.const2, this.clock, this.counter, this.greater,
+      this.c1, this.c2, this.c3, this.c4, this.c5, this.c6, this.c7, this.c8, this.c9,
       this.input1
     ]
   }

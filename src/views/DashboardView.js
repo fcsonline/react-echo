@@ -79,7 +79,7 @@ class DashboardView extends Component {
       <div className="Dashboard" onKeyDown={this.onKeyDown.bind(this)}>
         <svg viewBox="0 0 2000 1000" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <marker id="arrow" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto" markerUnits="strokeWidth" viewBox="0 0 20 20">
+            <marker id="arrow" markerWidth="10" markerHeight="10" refX="10" refY="3" orient="auto" markerUnits="strokeWidth" viewBox="0 0 20 20">
               <path d="M0,0 L0,6 L9,3 z" fill="#44b5e8" />
             </marker>
           </defs>
