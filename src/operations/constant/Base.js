@@ -5,15 +5,20 @@ export default class Constant extends Operation {
   constructor(options) {
     super(options)
 
-    this.output = new Parameter('integer', 'result', 'bottom');
-    this.output.value = this.evaluate();
-    this.outputs.push(this.output);
+    this.params = {
+      result: new Parameter('integer', 'result', 'bottom')
+    };
 
     this.offsets = {
       result: { x: 30, y: 60},
     };
 
+    this.listenParameters();
     this.updateParameterPositions();
+  }
+
+  listenParameters () {
+    this.params.result.value = this.evaluate();
   }
 
   evaluate () {

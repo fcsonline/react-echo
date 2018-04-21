@@ -6,9 +6,11 @@ export default class Arithmetic extends Operation {
   constructor(options) {
     super(options)
 
-    this.paramA = new Parameter('integer', 'a', 'left');
-    this.paramB = new Parameter('integer', 'b', 'right');
-    this.output = new Parameter('integer', 'result', 'bottom');
+    this.params = {
+      a: new Parameter('integer', 'a', 'left'),
+      b: new Parameter('integer', 'b', 'right'),
+      result: new Parameter('integer', 'result', 'bottom'),
+    };
 
     this.offsets = {
       a: { x: 0, y: 30},
@@ -16,25 +18,24 @@ export default class Arithmetic extends Operation {
       result: { x: 30, y: 60},
     };
 
+    this.listenParameters();
+    this.updateParameterPositions();
+  }
+
+  listenParameters () {
     this.reaction = reaction(
       () => [
-        this.paramA.value,
-        this.paramB.value,
+        this.params.a.value,
+        this.params.b.value,
       ],
       (params, reaction) => {
         const [a, b] = params;
 
         this.flashComputing();
-        this.outputs[0].value = this.compute(a, b);
+        this.params.result.value = this.compute(a, b);
         this.flashbackComputing();
       }
     );
-
-    this.inputs.push(this.paramA);
-    this.inputs.push(this.paramB);
-    this.outputs.push(this.output);
-
-    this.updateParameterPositions();
   }
 
   compute (a, b) {

@@ -19,6 +19,10 @@ class Parameter extends Node {
       name: this.name
     }
   }
+
+  static unserialize (data) {
+    return new Parameter(data);
+  }
 }
 
 decorate(Parameter, {

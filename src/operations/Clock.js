@@ -6,18 +6,24 @@ class Clock extends Operation {
   constructor(options) {
     super(options)
 
-    this.output = new Parameter('integer', 'result', 'bottom');
-    this.outputs.push(this.output);
+    this.params = {
+      result: new Parameter('integer', 'result', 'bottom')
+    };
 
     this.offsets = {
       result: { x: 30, y: 60},
     };
 
-    setInterval(() => {
-      this.outputs[0].value = this.outputs[0].value === 0 ? 1 : 0;
-    }, 1000);
-
+    this.listenParameters();
     this.updateParameterPositions();
+  }
+
+  listenParameters () {
+    setInterval(() => {
+      this.flashComputing();
+      this.params.result.value = this.params.result.value === 0 ? 1 : 0;
+      this.flashbackComputing();
+    }, 1000);
   }
 }
 

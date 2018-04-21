@@ -10,10 +10,12 @@ export default class If extends Operation {
       ...options
     })
 
-    this.condition = new Parameter('bool', 'condition', 'top');
-    this.paramA = new Parameter('integer', 'a', 'left');
-    this.paramB = new Parameter('integer', 'b', 'right');
-    this.output = new Parameter('bool', 'result', 'bottom');
+    this.params = {
+      condition: new Parameter('bool', 'condition', 'top'),
+      a: new Parameter('integer', 'a', 'left'),
+      b: new Parameter('integer', 'b', 'right'),
+      result: new Parameter('bool', 'result', 'bottom'),
+    };
 
     this.offsets = {
       condition: { x: 30, y: 0},
@@ -22,26 +24,24 @@ export default class If extends Operation {
       result: { x: 30, y: 60},
     };
 
+    this.listenParameters();
+    this.updateParameterPositions();
+  }
+
+  listenParameters () {
     this.reaction = reaction(
       () => [
-        this.condition.value,
-        this.paramA.value,
-        this.paramB.value,
+        this.params.condition.value,
+        this.params.a.value,
+        this.params.b.value,
       ],
       (params, reaction) => {
         const [condition, a, b] = params;
 
         this.flashComputing();
-        this.outputs[0].value = condition ? a : b;
+        this.params.result.value = condition ? a : b;
         this.flashbackComputing();
       }
     );
-
-    this.inputs.push(this.condition);
-    this.inputs.push(this.paramA);
-    this.inputs.push(this.paramB);
-    this.outputs.push(this.output);
-
-    this.updateParameterPositions();
   }
 }

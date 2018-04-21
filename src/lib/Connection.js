@@ -3,7 +3,7 @@ import { decorate, observable } from "mobx"
 import uniqid from 'uniqid';
 
 class Connection {
-  constructor(input, output) {
+  constructor({ input, output }) {
     if (input.type !== output.type && output.type !== 'signal') {
       throw new Error('incompatible type for connection');
     }
@@ -28,6 +28,15 @@ class Connection {
       input: this.input.serialize(),
       output: this.output.serialize()
     }
+  }
+
+  static unserialize (data) {
+    const item = new Connection(data);
+
+    // item.inputs = inputs;
+    // item.outputs = outputs;
+
+    return item;
   }
 }
 

@@ -1,13 +1,14 @@
 import { decorate, observable } from "mobx"
-import Parameter from './Parameter';
-import Operation from './Operation';
+import Parameter from '../../lib/Parameter';
+import Operation from '../../lib/Operation';
 
 class Input extends Operation {
   constructor(options) {
     super(options)
 
-    this.output = new Parameter('integer', 'result', 'bottom');
-    this.outputs.push(this.output);
+    this.params = {
+      result: new Parameter('integer', 'result', 'bottom')
+    };
 
     this.offsets = {
       result: { x: 60, y: 80},
@@ -22,6 +23,10 @@ class Input extends Operation {
       ...super.serialize(),
       kind: 'Input'
     }
+  }
+
+  static unserialize (data) {
+    return new Input(data);
   }
 }
 

@@ -58,10 +58,6 @@ class OperationView extends Component {
 
   render() {
     const { operation, onClick, active } = this.props
-    const parameters = [
-      ...operation.inputs,
-      ...operation.outputs
-    ]
     const computing = operation.computing;
 
     return [
@@ -78,7 +74,7 @@ class OperationView extends Component {
         ry="5"
         transform={operation.rotate ? `rotate(45 ${operation.x + 30} ${operation.y + 30})` : ''}
       />,
-      ...parameters.map(this.renderParameter.bind(this)),
+      ...Object.values(operation.params).map(this.renderParameter.bind(this)),
       <text className="OperationText" x={operation.x + 30} y={operation.y + 30} text-anchor="middle" alignment-baseline="central">
         {operation.name}
       </text>

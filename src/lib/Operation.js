@@ -1,4 +1,6 @@
 import Node from './Node';
+import Parameter from './Parameter';
+import Catalog from '../operations/Catalog';
 import { decorate, observable } from "mobx"
 import { reaction } from "mobx";
 
@@ -9,10 +11,14 @@ class Operation extends Node {
     this.name = options.name;
     this.rotate = options.rotate;
     this.computing = false;
-    this.inputs = [];
-    this.outputs = [];
+
+    this.params = {};
     this.offsets = {};
 
+    this.listenCoordinates();
+  }
+
+  listenCoordinates () {
     this.reaction = reaction(
       () => [
         this.x,
@@ -22,6 +28,22 @@ class Operation extends Node {
         this.updateParameterPositions();
       }
     );
+  }
+
+  getParameter(name) {
+    if (!this.params[name]) {
+      throw new Error(`Unknown param ${name} in ${this.constructor.name}`);
+    }
+
+    return this.params[name];
+  }
+
+  getOffset(name) {
+    if (!this.offsets[name]) {
+      throw new Error(`Unknown offset ${name} in ${this.constructor.name}`);
+    }
+
+    return this.offsets[name];
   }
 
   flashComputing () {
@@ -36,11 +58,9 @@ class Operation extends Node {
   }
 
   updateParameterPositions () {
-    [
-      ...this.inputs,
-      ...this.outputs
-    ].forEach((param) => {
-      const offset = this.offsets[param.name] || { x: 0, y: 0};
+    Object.keys(this.params).forEach((paramName) => {
+      const offset = this.getOffset(paramName);
+      const param = this.getParameter(paramName);
 
       param.x = this.x + offset.x;
       param.y = this.y + offset.y;
@@ -50,10 +70,25 @@ class Operation extends Node {
   serialize () {
     return {
       ...super.serialize(),
-      kind: 'Operation',
-      inputs: this.inputs.map((input) => input.serialize()),
-      outputs: this.outputs.map((output) => output.serialize()),
+      kind: this.constructor.name,
+      params: this.params.map((param) => param.serialize())
     }
+  }
+
+  static unserialize (data) {
+    const inputs = data.inputs.map((param) => {
+      return Parameter.unserialize(param);
+    });
+    const outputs = data.outputs.map((param) => {
+      return Parameter.unserialize(param);
+    });
+
+    const item = new Catalog[data.kind](data);
+
+    item.inputs = inputs;
+    item.outputs = outputs;
+
+    return item;
   }
 }
 

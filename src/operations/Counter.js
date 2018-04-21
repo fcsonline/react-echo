@@ -6,28 +6,31 @@ export default class Counter extends Operation {
   constructor(options) {
     super(options)
 
-    this.input = new Parameter('signal', 'a', 'top');
-    this.output = new Parameter('integer', 'result', 'bottom');
 
-    this.offsets = {
-      a: { x: 30, y: 0 },
-      result: { x: 30, y: 60 },
+    this.params = {
+      input: new Parameter('signal', 'input', 'top'),
+      output: new Parameter('integer', 'output', 'bottom')
     };
 
+    this.offsets = {
+      input: { x: 30, y: 0 },
+      output: { x: 30, y: 60 },
+    };
+
+    this.listenParameters();
+    this.updateParameterPositions();
+  }
+
+  listenParameters () {
     this.reaction = reaction(
       () => [
-        this.input.value
+        this.params.input.value
       ],
       (params, reaction) => {
         this.flashComputing();
-        this.outputs[0].value++;
+        this.params.output.value++;
         this.flashbackComputing();
       }
     );
-
-    this.inputs.push(this.input);
-    this.outputs.push(this.output);
-
-    this.updateParameterPositions();
   }
 }

@@ -4,7 +4,7 @@ import './DashboardView.css';
 
 import Operation from '../lib/Operation';
 import Connection from '../lib/Connection';
-import Input from '../lib/Input';
+import Input from '../operations/other/Input';
 
 import InputView from './InputView';
 import ConnectionView from './ConnectionView';
