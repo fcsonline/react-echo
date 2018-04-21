@@ -22,77 +22,36 @@ import E from './operations/constant/E';
 import DashboardView from './views/DashboardView';
 
 class App extends Component {
-  componentWillMount () {
+  constructor(props) {
+    super(props);
 
-    this.const1 = new Pi({ x: 680, y: 100 });
-    this.const2 = new E({ x: 380, y: 700 });
-    this.sum1 = new Sum({ x: 430, y: 350 });
-    this.subtract1 = new Subtract({ x: 530, y: 500 });
-    this.mul1 = new Multiply({ x: 630, y: 350 });
-    this.if1 = new If({ name: 'if', x: 150, y: 880 });
-    this.clock = new Clock({ name: '\u231b', x: 100, y: 100 });
-    this.counter = new Counter({ name: '\u2807', x: 100, y: 250 });
-    this.greater = new Greater({ name: '>', x: 150, y: 550 });
-    this.input1 = new Input({ name: 'In', x: 350, y: 100 });
+    this.objects = [];
+  }
 
-    this.sum1.getParameter('a').value = 3;
-    this.sum1.getParameter('b').value = 5;
-    this.mul1.getParameter('a').value = -5;
-    this.subtract1.getParameter('a').value = 50;
-    this.subtract1.getParameter('b').value = 50;
+  loadModel (data) {
+    const operations = data.filter((item) => item.kind !== 'Connection');
+    const connections = data.filter((item) => item.kind === 'Connection');
 
-    this.if1.getParameter('a').value = 150;
+    const objects = operations.map((item) => {
+      return Catalog[item.kind].unserialize(item);
+    });
 
-    this.c1 = new Connection({
-      input: this.sum1.getParameter('result'),
-      output: this.subtract1.getParameter('a')
-    })
-
-    this.c2 = new Connection({
-      input: this.input1.getParameter('result'),
-      output: this.sum1.getParameter('a')
-    })
-
-    this.c3 = new Connection({
-      input: this.const1.getParameter('result'),
-      output: this.mul1.getParameter('b')
-    })
-
-    this.c4 = new Connection({
-      input: this.clock.getParameter('result'),
-      output: this.counter.getParameter('input')
-    })
-
-    this.c5 = new Connection({
-      input: this.counter.getParameter('output'),
-      output: this.greater.getParameter('a')
-    })
-
-    this.c6 = new Connection({
-      input: this.subtract1.getParameter('result'),
-      output: this.greater.getParameter('b')
-    })
-
-    this.c7 = new Connection({
-      input: this.greater.getParameter('result'),
-      output: this.if1.getParameter('condition')
-    })
-
-    this.c8 = new Connection({
-      input: this.const2.getParameter('result'),
-      output: this.if1.getParameter('b')
-    })
-
-    this.c9 = new Connection({
-      input: this.mul1.getParameter('result'),
-      output: this.subtract1.getParameter('b')
-    })
+    const connectivity = connections.map((item) => {
+      return Catalog[item.kind].unserialize(item, (id) => {
+        return objects.filter((object) => {
+          return object.id === id;
+        })[0];
+      });
+    });
 
     this.objects = [
-      this.sum1, this.mul1, this.subtract1, this.if1, this.const1, this.const2, this.clock, this.counter, this.greater,
-      this.c1, this.c2, this.c3, this.c4, this.c5, this.c6, this.c7, this.c8, this.c9,
-      this.input1
-    ]
+      ...objects,
+      ...connectivity
+    ];
+  }
+
+  onClickExample () {
+    this.loadModel([{"id":"jg9uutni","x":430,"y":350,"name":"+","kind":"Sum"},{"id":"jg9uutnq","x":630,"y":350,"name":"x","kind":"Sum"},{"id":"jg9uutnm","x":530,"y":500,"name":"-","kind":"Subtract"},{"id":"jg9uutnu","x":150,"y":880,"name":"if","kind":"If"},{"id":"jg9uutnd","x":680,"y":100,"name":"π","kind":"Pi"},{"id":"jg9uutng","x":380,"y":700,"name":"e","kind":"Pi"},{"id":"jg9uutnz","x":100,"y":100,"name":"⌛","kind":"Clock"},{"id":"jg9uuto1","x":100,"y":250,"name":"⠇","kind":"Counter"},{"id":"jg9uuto4","x":150,"y":550,"name":">","kind":"Greater"},{"id":"jg9uutoa","kind":"Connection","input_operation_id":"jg9uutni","input_parameter_name":"result","output_operation_id":"jg9uutnm","output_parameter_name":"a"},{"id":"jg9uutob","kind":"Connection","input_operation_id":"jg9uuto8","input_parameter_name":"result","output_operation_id":"jg9uutni","output_parameter_name":"a"},{"id":"jg9uutoc","kind":"Connection","input_operation_id":"jg9uutnd","input_parameter_name":"result","output_operation_id":"jg9uutnq","output_parameter_name":"b"},{"id":"jg9uutod","kind":"Connection","input_operation_id":"jg9uutnz","input_parameter_name":"result","output_operation_id":"jg9uuto1","output_parameter_name":"input"},{"id":"jg9uutoe","kind":"Connection","input_operation_id":"jg9uuto1","input_parameter_name":"output","output_operation_id":"jg9uuto4","output_parameter_name":"a"},{"id":"jg9uutof","kind":"Connection","input_operation_id":"jg9uutnm","input_parameter_name":"result","output_operation_id":"jg9uuto4","output_parameter_name":"b"},{"id":"jg9uutog","kind":"Connection","input_operation_id":"jg9uuto4","input_parameter_name":"result","output_operation_id":"jg9uutnu","output_parameter_name":"condition"},{"id":"jg9uutoh","kind":"Connection","input_operation_id":"jg9uutng","input_parameter_name":"result","output_operation_id":"jg9uutnu","output_parameter_name":"b"},{"id":"jg9uutoi","kind":"Connection","input_operation_id":"jg9uutnq","input_parameter_name":"result","output_operation_id":"jg9uutnm","output_parameter_name":"b"},{"id":"jg9uuto8","x":350,"y":100,"name":"In","kind":"Input"}])
   }
 
   onClickSerialize () {
@@ -103,11 +62,8 @@ class App extends Component {
 
   onClickRestore() {
     const data = JSON.parse(localStorage.getItem('echo'))
-    const objects = data.map((item) => {
-      return Catalog[item.kind].unserialize(item)
-    });
 
-    this.objects = objects;
+    this.loadModel(data)
   }
 
   onClickOperation() {
@@ -122,6 +78,7 @@ class App extends Component {
           <h1 className="Title">Welcome to react-echo</h1>
           <button onClick={this.onClickSerialize.bind(this)}>Save</button>
           <button onClick={this.onClickRestore.bind(this)}>Restore</button>
+          <button onClick={this.onClickExample.bind(this)}>Example</button>
           <div className="Operations">
             <h2 className="Title">Arithmetic</h2>
             <button onClick={this.onClickOperation.bind(this)}>+</button>

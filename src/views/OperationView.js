@@ -7,21 +7,34 @@ class OperationView extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {};
+
     this.handleMouseUp = this.handleMouseUp.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
   }
 
   handleMouseDown (e) {
-    this.coords = {
-      x: e.pageX,
-      y: e.pageY
-    }
+    e.stopPropagation();
+
+    const { point: pt } = this.props;
+
+    pt.x = e.pageX;
+    pt.y = e.pageY;
+
+    const from = pt.matrixTransform(this.refs.operation.getScreenCTM().inverse());
+
+    this.setState({
+      fromX: from.x,
+      fromY: from.y
+    });
 
     document.addEventListener('mousemove', this.handleMouseMove);
   };
 
   handleMouseUp (e) {
+    e.stopPropagation();
+
     const { operation } = this.props
 
     operation.x = Math.round(operation.x / 10) * 10;
@@ -29,20 +42,24 @@ class OperationView extends Component {
 
     document.removeEventListener('mousemove', this.handleMouseMove);
 
-    this.coords = {};
+    this.setState({
+      fromX: null,
+      fromY: null
+    });
   };
 
   handleMouseMove (e) {
-    const { operation } = this.props
+    e.stopPropagation();
 
-    const xDiff = this.coords.x - e.pageX;
-    const yDiff = this.coords.y - e.pageY;
+    const { operation, point: pt } = this.props;
 
-    this.coords.x = e.pageX;
-    this.coords.y = e.pageY;
+    pt.x = e.pageX;
+    pt.y = e.pageY;
 
-    operation.x = ((operation.x - xDiff) / 10) * 10;
-    operation.y = ((operation.y - yDiff) / 10) * 10;
+    const to = pt.matrixTransform(this.refs.operation.getScreenCTM().inverse());
+
+    operation.x = to.x - 30;
+    operation.y = to.y - 30;
   };
 
   renderParameter (parameter) {
@@ -62,6 +79,7 @@ class OperationView extends Component {
 
     return [
       <rect
+        ref="operation"
         onClick={() => onClick(operation)}
         onMouseDown={this.handleMouseDown.bind(this)}
         onMouseUp={this.handleMouseUp.bind(this)}
@@ -75,7 +93,7 @@ class OperationView extends Component {
         transform={operation.rotate ? `rotate(45 ${operation.x + 30} ${operation.y + 30})` : ''}
       />,
       ...Object.values(operation.params).map(this.renderParameter.bind(this)),
-      <text className="OperationText" x={operation.x + 30} y={operation.y + 30} text-anchor="middle" alignment-baseline="central">
+      <text className="OperationText" x={operation.x + 30} y={operation.y + 30} textAnchor="middle" alignmentBaseline="central">
         {operation.name}
       </text>
     ];

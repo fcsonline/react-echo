@@ -1,5 +1,4 @@
 import Node from './Node';
-import Parameter from './Parameter';
 import Catalog from '../operations/Catalog';
 import { decorate, observable } from "mobx"
 import { reaction } from "mobx";
@@ -70,25 +69,13 @@ class Operation extends Node {
   serialize () {
     return {
       ...super.serialize(),
-      kind: this.constructor.name,
-      params: this.params.map((param) => param.serialize())
+      name: this.name,
+      kind: this.constructor.name
     }
   }
 
   static unserialize (data) {
-    const inputs = data.inputs.map((param) => {
-      return Parameter.unserialize(param);
-    });
-    const outputs = data.outputs.map((param) => {
-      return Parameter.unserialize(param);
-    });
-
-    const item = new Catalog[data.kind](data);
-
-    item.inputs = inputs;
-    item.outputs = outputs;
-
-    return item;
+    return new Catalog[data.kind](data);
   }
 }
 

@@ -7,9 +7,9 @@ export default class Relational extends Operation {
     super(options)
 
     this.params = {
-      a: new Parameter('integer', 'a', 'left'),
-      b: new Parameter('integer', 'b', 'right'),
-      result: new Parameter('bool', 'result', 'bottom'),
+      a: new Parameter(this, 'integer', 'a', 'left'),
+      b: new Parameter(this, 'integer', 'b', 'right'),
+      result: new Parameter(this, 'bool', 'result', 'bottom'),
     };
 
     this.offsets = {

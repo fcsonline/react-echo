@@ -50,7 +50,7 @@ class ParameterView extends Component {
         className="ParameterText"
         x={parameter.x + x}
         y={parameter.y + y}
-        text-anchor={anchor}
+        textAnchor={anchor}
       >
         {parameter.value.toString()}
       </text>

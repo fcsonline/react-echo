@@ -20,7 +20,7 @@ class ConnectionView extends Component {
     const offseto = offsets[o.anchor] || { x: 0, y: 0 };
 
     return (
-      <path className="Connection" marker-end="url(#arrow)" d={`M ${i.x} ${i.y} L ${i.x + offseti.x} ${i.y + offseti.y} L ${o.x + offseto.x} ${o.y + offseto.y} L ${o.x} ${o.y}`} />
+      <path className="Connection" markerEnd="url(#arrow)" d={`M ${i.x} ${i.y} L ${i.x + offseti.x} ${i.y + offseti.y} L ${o.x + offseto.x} ${o.y + offseto.y} L ${o.x} ${o.y}`} />
     )
   }
 }

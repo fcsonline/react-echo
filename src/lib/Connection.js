@@ -25,18 +25,23 @@ class Connection {
     return {
       id: this.id,
       kind: 'Connection',
-      input: this.input.serialize(),
-      output: this.output.serialize()
+
+      input_operation_id: this.input.operation.id,
+      input_parameter_name: this.input.name,
+
+      output_operation_id: this.output.operation.id,
+      output_parameter_name: this.output.name,
     }
   }
 
-  static unserialize (data) {
-    const item = new Connection(data);
+  static unserialize (data, finder) {
+    const input = finder(data.input_operation_id);
+    const output = finder(data.output_operation_id);
 
-    // item.inputs = inputs;
-    // item.outputs = outputs;
-
-    return item;
+    return new Connection({
+      input: input.getParameter(data.input_parameter_name),
+      output: output.getParameter(data.output_parameter_name)
+    });
   }
 }
 
