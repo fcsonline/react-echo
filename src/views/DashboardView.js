@@ -14,7 +14,7 @@ class DashboardView extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { active: null };
+    this.state = { active: [] };
 
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
@@ -32,7 +32,8 @@ class DashboardView extends Component {
 
     this.setState({
       fromX: from.x,
-      fromY: from.y
+      fromY: from.y,
+      active: []
     });
 
     document.addEventListener('mousemove', this.handleMouseMove);
@@ -41,7 +42,15 @@ class DashboardView extends Component {
   handleMouseUp (e) {
     document.removeEventListener('mousemove', this.handleMouseMove);
 
+    this.pt.x = e.clientX;
+    this.pt.y = e.clientY;
+
+    const to = this.pt.matrixTransform(this.refs.dashboard.getScreenCTM().inverse());
+
+    const active = this.props.objects.filter((o) => o.x > this.state.fromX && o.x < to.x && o.y > this.state.fromY && o.y < to.y);
+
     this.setState({
+      active,
       fromX: null,
       fromY: null,
       toX: null,
@@ -64,24 +73,8 @@ class DashboardView extends Component {
 
   onClickOperation (operation) {
     this.setState({
-      active: operation
+      active: [operation]
     });
-  }
-
-  onKeyDown (event) {
-    const { active } = this.state;
-
-    if (!active) return
-
-    if (event.key === 'ArrowUp') {
-      active.y = active.y - 5;
-    } else if (event.key === 'ArrowDown') {
-      active.y = active.y + 5;
-    } else if (event.key === 'ArrowRight') {
-      active.x = active.x + 5;
-    } else if (event.key === 'ArrowLeft') {
-      active.x = active.x - 5;
-    }
   }
 
   renderOperation (operation) {
@@ -92,7 +85,7 @@ class DashboardView extends Component {
         key={operation.id}
         operation={operation}
         point={this.pt}
-        active={active === operation}
+        active={active.includes(operation)}
         onClick={this.onClickOperation.bind(this)}
       />
     );
@@ -141,7 +134,7 @@ class DashboardView extends Component {
     const inputs = objects.filter((o) => o instanceof Input);
 
     return (
-      <div className="Dashboard" onKeyDown={this.onKeyDown.bind(this)}>
+      <div className="Dashboard">
         <svg
           ref="dashboard"
           viewBox="0 0 2000 1000"
