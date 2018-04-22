@@ -10,6 +10,25 @@
   cursor: pointer;
 }
 
+.ParameterHighlight {
+  fill: none;
+  stroke: #14739f;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-miterlimit: 6;
+  stroke-dasharray: 6;
+  stroke-dashoffset: 90;
+
+  animation: draw 3.5s infinite;
+}
+
+@keyframes draw {
+  50% {
+    stroke-dashoffset: 0;
+  }
+}
+
 .ParameterText {
   fill: #999;
   pointer-events: none;

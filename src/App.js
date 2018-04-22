@@ -7,14 +7,18 @@ import Catalog from './operations/Catalog';
 
 import Connection from './lib/Connection';
 import Input from './operations/other/Input';
-import Clock from './operations/Clock';
-import Counter from './operations/Counter';
+import Clock from './operations/other/Clock';
+import Counter from './operations/other/Counter';
 
-import Greater from './operations/relational/Greater';
 import Sum from './operations/arithmetic/Sum';
 import Multiply from './operations/arithmetic/Multiply';
 import Subtract from './operations/arithmetic/Subtract';
+import Pow from './operations/arithmetic/Pow';
 import If from './operations/conditional/If';
+import And from './operations/logical/And';
+import Or from './operations/logical/Or';
+import Greater from './operations/relational/Greater';
+import Less from './operations/relational/Less';
 
 import Pi from './operations/constant/Pi';
 import E from './operations/constant/E';
@@ -66,8 +70,12 @@ class App extends Component {
     this.loadModel(data)
   }
 
-  onClickOperation() {
-    this.objects.push(new Sum('a'));
+  onClickOperation(builder) {
+    return () => this.objects.push(builder());
+  }
+
+  addObject(object) {
+    this.objects.push(object);
   }
 
   render() {
@@ -80,16 +88,35 @@ class App extends Component {
           <button onClick={this.onClickRestore.bind(this)}>Restore</button>
           <button onClick={this.onClickExample.bind(this)}>Example</button>
           <div className="Operations">
+
             <h2 className="Title">Arithmetic</h2>
-            <button onClick={this.onClickOperation.bind(this)}>+</button>
+            <button onClick={this.onClickOperation(() => new Sum()).bind(this)}>+</button>
+            <button onClick={this.onClickOperation(() => new Subtract()).bind(this)}>-</button>
+            <button onClick={this.onClickOperation(() => new Multiply()).bind(this)}>x</button>
+            <button onClick={this.onClickOperation(() => new Pow()).bind(this)}>^</button>
+
             <h2 className="Title">Logical</h2>
+            <button onClick={this.onClickOperation(() => new And()).bind(this)}>&</button>
+            <button onClick={this.onClickOperation(() => new Or()).bind(this)}>|</button>
+
             <h2 className="Title">Conditional</h2>
+            <button onClick={this.onClickOperation(() => new If()).bind(this)}>if</button>
+
             <h2 className="Title">Constants</h2>
+            <button onClick={this.onClickOperation(() => new Pi()).bind(this)}>π</button>
+            <button onClick={this.onClickOperation(() => new E()).bind(this)}>e</button>
+
             <h2 className="Title">Relational</h2>
+            <button onClick={this.onClickOperation(() => new Greater()).bind(this)}>&gt;</button>
+            <button onClick={this.onClickOperation(() => new Less()).bind(this)}>&lt;</button>
+
           </div>
         </header>
         <div className="Wrapper">
-          <DashboardView objects={this.objects} />
+          <DashboardView
+            objects={this.objects}
+            addObject={this.addObject.bind(this)}
+          />
         </div>
       </div>
     );

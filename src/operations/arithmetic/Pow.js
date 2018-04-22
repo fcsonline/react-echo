@@ -1,14 +1,14 @@
 import Arithmetic from './Base';
 
-export default class Less extends Arithmetic {
+export default class Pow extends Arithmetic {
   constructor(options) {
     super({
-      name: '<',
+      name: '^',
       ...options
     })
   }
 
   compute (a, b) {
-    return a < b;
+    return a ^ b;
   }
 }

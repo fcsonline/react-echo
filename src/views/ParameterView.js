@@ -15,13 +15,20 @@ class ParameterView extends Component {
     return offsets[parameter.anchor] || { x: 0, y: 0};
   }
 
+  onClick (e) {
+    const { parameter, onClick } = this.props
+
+    e.stopPropagation();
+    onClick(parameter);
+  }
+
   renderShape () {
     const { parameter } = this.props
 
     if (parameter.type === 'signal')  {
       return (
         <rect
-          className="Parameter"
+          onClick={this.onClick.bind(this)}
           x={parameter.x - 4}
           y={parameter.y - 4}
           width="8"
@@ -32,10 +39,26 @@ class ParameterView extends Component {
 
     return (
       <circle
+        onClick={this.onClick.bind(this)}
         className="Parameter"
         cx={parameter.x}
         cy={parameter.y}
-        r="4"
+        r="5"
+      />
+    )
+  }
+
+  renderHighlight () {
+    const { parameter, highlighted } = this.props;
+
+    if (!highlighted) return
+
+    return (
+      <circle
+        className="ParameterHighlight"
+        cx={parameter.x}
+        cy={parameter.y}
+        r="10"
       />
     )
   }
@@ -53,7 +76,8 @@ class ParameterView extends Component {
         textAnchor={anchor}
       >
         {parameter.value.toString()}
-      </text>
+      </text>,
+      this.renderHighlight()
     ];
   }
 }

@@ -63,12 +63,14 @@ class OperationView extends Component {
   };
 
   renderParameter (parameter) {
-    const { operation } = this.props
+    const { operation, highlighted } = this.props
 
     return (
       <ParameterView
         key={`${operation.id}-${parameter.id}`}
         parameter={parameter}
+        onClick={this.props.onParameterClick}
+        highlighted={highlighted}
       />
     )
   }

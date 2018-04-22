@@ -1,6 +1,6 @@
-import Parameter from '../lib/Parameter';
-import Operation from '../lib/Operation';
 import { reaction } from "mobx";
+import Parameter from '../../lib/Parameter';
+import Operation from '../../lib/Operation';
 
 export default class Counter extends Operation {
   constructor(options) {
