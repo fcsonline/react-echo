@@ -74,6 +74,10 @@ class App extends Component {
     return () => this.objects.push(builder());
   }
 
+  removeObject(object) {
+    this.objects.splice(this.objects.indexOf(object), 1);
+  }
+
   addObject(object) {
     this.objects.push(object);
   }
@@ -116,6 +120,7 @@ class App extends Component {
           <DashboardView
             objects={this.objects}
             addObject={this.addObject.bind(this)}
+            removeObject={this.removeObject.bind(this)}
           />
         </div>
       </div>

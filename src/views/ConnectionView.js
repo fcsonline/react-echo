@@ -4,7 +4,7 @@ import './ConnectionView.css';
 
 class ConnectionView extends Component {
   render() {
-    const { connection } = this.props
+    const { connection, active, onClick } = this.props
 
     const i = connection.input;
     const o = connection.output;
@@ -20,7 +20,12 @@ class ConnectionView extends Component {
     const offseto = offsets[o.anchor] || { x: 0, y: 0 };
 
     return (
-      <path className="Connection" markerEnd="url(#arrow)" d={`M ${i.x} ${i.y} L ${i.x + offseti.x} ${i.y + offseti.y} L ${o.x + offseto.x} ${o.y + offseto.y} L ${o.x} ${o.y}`} />
+      <path
+        onClick={() => onClick(connection)}
+        className={`Connection ${active ? ' ConnectionActive': ''}`}
+        markerEnd="url(#arrow)"
+        d={`M ${i.x} ${i.y} L ${i.x + offseti.x} ${i.y + offseti.y} L ${o.x + offseto.x} ${o.y + offseto.y} L ${o.x} ${o.y}`}
+      />
     )
   }
 }

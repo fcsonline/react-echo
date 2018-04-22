@@ -26,6 +26,8 @@ class DashboardView extends Component {
 
   componentDidMount () {
     this.pt = this.refs.dashboard.createSVGPoint();
+
+    document.addEventListener('keydown', this.onKeyDown.bind(this));
   }
 
   onParameterClick (parameter) {
@@ -109,10 +111,17 @@ class DashboardView extends Component {
     });
   };
 
+  onKeyDown (e) {
+    const { active } = this.state;
 
-  onClickOperation (operation) {
+    if (e.code === 'Backspace') {
+      this.props.removeObject(active[0]);
+    }
+  };
+
+  onClickObject (object) {
     this.setState({
-      active: [operation]
+      active: [object]
     });
   }
 
@@ -126,7 +135,7 @@ class DashboardView extends Component {
         point={this.pt}
         highlighted={!!fromParameter && fromParameter.operation !== operation}
         active={active.includes(operation)}
-        onClick={this.onClickOperation.bind(this)}
+        onClick={this.onClickObject.bind(this)}
         onParameterClick={this.onParameterClick.bind(this)}
       />
     );
@@ -143,10 +152,14 @@ class DashboardView extends Component {
   }
 
   renderConnection (connection) {
+    const { active } = this.state;
+
     return (
       <ConnectionView
         key={connection.id}
         connection={connection}
+        onClick={this.onClickObject.bind(this)}
+        active={active.includes(connection)}
       />
     );
   }

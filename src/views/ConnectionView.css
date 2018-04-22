@@ -3,3 +3,7 @@
   stroke: #44b5e8;
   fill: none;
 }
+
+.ConnectionActive {
+  stroke-width: 4;
+}
