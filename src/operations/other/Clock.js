@@ -4,10 +4,13 @@ import Operation from '../../lib/Operation';
 
 class Clock extends Operation {
   constructor(options) {
-    super(options)
+    super({
+      name: '⌛',
+      ...options
+    })
 
     this.params = {
-      result: new Parameter(this, 'integer', 'result', 'bottom')
+      result: new Parameter(this, 'integer', 'result', 'bottom', true)
     };
 
     this.offsets = {

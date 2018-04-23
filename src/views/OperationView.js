@@ -9,6 +9,7 @@ class OperationView extends Component {
 
     this.state = {};
 
+    this.renderParameter = this.renderParameter.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
@@ -67,10 +68,10 @@ class OperationView extends Component {
 
     return (
       <ParameterView
-        key={`${operation.id}-${parameter.id}`}
+        key={`param-${operation.id}-${parameter.name}`}
         parameter={parameter}
         onClick={this.props.onParameterClick}
-        highlighted={highlighted}
+        highlighted={!parameter.output && highlighted}
       />
     )
   }
@@ -82,6 +83,7 @@ class OperationView extends Component {
     return [
       <rect
         ref="operation"
+        key={'rect' + operation.id}
         onClick={() => onClick(operation)}
         onMouseDown={this.handleMouseDown.bind(this)}
         onMouseUp={this.handleMouseUp.bind(this)}
@@ -94,8 +96,15 @@ class OperationView extends Component {
         ry="5"
         transform={operation.rotate ? `rotate(45 ${operation.x + 30} ${operation.y + 30})` : ''}
       />,
-      ...Object.values(operation.params).map(this.renderParameter.bind(this)),
-      <text className="OperationText" x={operation.x + 30} y={operation.y + 30} textAnchor="middle" alignmentBaseline="central">
+      ...Object.values(operation.params).map(this.renderParameter),
+      <text
+        key={'text' + operation.id}
+        className="OperationText"
+        x={operation.x + 30}
+        y={operation.y + 30}
+        textAnchor="middle"
+        alignmentBaseline="central"
+      >
         {operation.name}
       </text>
     ];

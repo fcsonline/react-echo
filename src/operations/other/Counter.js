@@ -4,13 +4,15 @@ import Operation from '../../lib/Operation';
 
 export default class Counter extends Operation {
   constructor(options) {
-    super(options)
-
+    super({
+      name: '⠇',
+      ...options
+    })
 
     this.params = {
-      input: new Parameter(this, 'signal', 'input', 'top'),
-      output: new Parameter(this, 'integer', 'output', 'bottom'),
-      reset: new Parameter(this, 'bool', 'reset', 'right')
+      input: new Parameter(this, 'signal', 'input', 'top', false),
+      output: new Parameter(this, 'integer', 'output', 'bottom', true),
+      reset: new Parameter(this, 'bool', 'reset', 'right', false)
     };
 
     this.offsets = {
@@ -34,7 +36,7 @@ export default class Counter extends Operation {
         const output = this.params.output;
 
         this.flashComputing();
-        output.value = (reset.value ? 0 : output.value + 1);
+        output.value = (reset ? 0 : output.value + 1);
         this.flashbackComputing();
       }
     );

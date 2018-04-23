@@ -7,9 +7,9 @@ export default class Arithmetic extends Operation {
     super(options)
 
     this.params = {
-      a: new Parameter(this, 'integer', 'a', 'left'),
-      b: new Parameter(this, 'integer', 'b', 'right'),
-      result: new Parameter(this, 'integer', 'result', 'bottom'),
+      a: new Parameter(this, 'integer', 'a', 'left', false),
+      b: new Parameter(this, 'integer', 'b', 'right', false),
+      result: new Parameter(this, 'integer', 'result', 'bottom', true),
     };
 
     this.offsets = {

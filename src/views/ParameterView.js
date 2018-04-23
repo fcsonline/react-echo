@@ -29,6 +29,8 @@ class ParameterView extends Component {
       return (
         <rect
           onClick={this.onClick.bind(this)}
+          onMouseDown={(e) => e.stopPropagation()}
+          onMouseUp={(e) => e.stopPropagation()}
           x={parameter.x - 4}
           y={parameter.y - 4}
           width="8"
@@ -40,6 +42,8 @@ class ParameterView extends Component {
     return (
       <circle
         onClick={this.onClick.bind(this)}
+        onMouseDown={(e) => e.stopPropagation()}
+        onMouseUp={(e) => e.stopPropagation()}
         className="Parameter"
         cx={parameter.x}
         cy={parameter.y}
@@ -55,6 +59,7 @@ class ParameterView extends Component {
 
     return (
       <circle
+        pointerEvents='none'
         className="ParameterHighlight"
         cx={parameter.x}
         cy={parameter.y}
@@ -68,6 +73,7 @@ class ParameterView extends Component {
     const { x, y, anchor } = this.getTextOffsets();
 
     return [
+      this.renderHighlight(),
       this.renderShape(),
       <text
         className="ParameterText"
@@ -76,8 +82,7 @@ class ParameterView extends Component {
         textAnchor={anchor}
       >
         {parameter.value.toString()}
-      </text>,
-      this.renderHighlight()
+      </text>
     ];
   }
 }

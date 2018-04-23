@@ -35,6 +35,8 @@ class DashboardView extends Component {
       const input = this.state.fromParameter;
       const output = parameter;
 
+      if (input.operation === parameter.operation) return;
+
       if (input !== output) {
         this.props.addObject(new Connection({
           input,
@@ -45,6 +47,8 @@ class DashboardView extends Component {
         fromParameter: null
       });
     } else {
+      if (!parameter.output) return;
+
       this.setState({
         fromParameter: parameter
       });
@@ -74,7 +78,8 @@ class DashboardView extends Component {
     this.setState({
       fromX: from.x,
       fromY: from.y,
-      active: []
+      active: [],
+      fromParameter: null
     });
 
     document.addEventListener('mousemove', this.handleMouseMove);
@@ -114,8 +119,8 @@ class DashboardView extends Component {
   onKeyDown (e) {
     const { active } = this.state;
 
-    if (e.code === 'Backspace') {
-      this.props.removeObject(active[0]);
+    if (e.code === 'Backspace' || e.code === 'Delete') {
+      this.props.removeObjects(active);
     }
   };
 
@@ -170,7 +175,13 @@ class DashboardView extends Component {
     if (!fromParameter || !toX || !toY) return
 
     return (
-      <path stroke='#44b5e8' strokeWidth="2" markerEnd="url(#arrow)" d={`M ${fromParameter.x} ${fromParameter.y} L ${toX} ${toY}`} />
+      <path
+        pointerEvents='none'
+        stroke='#44b5e8'
+        strokeWidth="2"
+        markerEnd="url(#arrow)"
+        d={`M ${fromParameter.x} ${fromParameter.y} L ${toX} ${toY}`}
+      />
     )
   }
 
@@ -183,8 +194,8 @@ class DashboardView extends Component {
       <rect
         fill='#8ebfffa4'
         stroke='#44b5e8'
-        x={fromX}
-        y={fromY}
+        x={Math.min(fromX, toX)}
+        y={Math.min(fromY, toY)}
         width={Math.abs(toX - fromX)}
         height={Math.abs(toY - fromY)}
       />

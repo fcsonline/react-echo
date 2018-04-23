@@ -6,7 +6,7 @@ export default class Constant extends Operation {
     super(options)
 
     this.params = {
-      result: new Parameter(this, 'integer', 'result', 'bottom')
+      result: new Parameter(this, 'integer', 'result', 'bottom', true)
     };
 
     this.offsets = {

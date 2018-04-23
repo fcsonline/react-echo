@@ -5,8 +5,6 @@ import './App.css';
 
 import Catalog from './operations/Catalog';
 
-import Connection from './lib/Connection';
-import Input from './operations/other/Input';
 import Clock from './operations/other/Clock';
 import Counter from './operations/other/Counter';
 
@@ -74,8 +72,10 @@ class App extends Component {
     return () => this.objects.push(builder());
   }
 
-  removeObject(object) {
-    this.objects.splice(this.objects.indexOf(object), 1);
+  removeObjects(objects) {
+    objects.forEach((object) => {
+      this.objects.splice(this.objects.indexOf(object), 1);
+    });
   }
 
   addObject(object) {
@@ -114,13 +114,16 @@ class App extends Component {
             <button onClick={this.onClickOperation(() => new Greater()).bind(this)}>&gt;</button>
             <button onClick={this.onClickOperation(() => new Less()).bind(this)}>&lt;</button>
 
+            <h2 className="Title">Other</h2>
+            <button onClick={this.onClickOperation(() => new Clock()).bind(this)}>⌛</button>
+            <button onClick={this.onClickOperation(() => new Counter()).bind(this)}>⠇</button>
           </div>
         </header>
         <div className="Wrapper">
           <DashboardView
             objects={this.objects}
             addObject={this.addObject.bind(this)}
-            removeObject={this.removeObject.bind(this)}
+            removeObjects={this.removeObjects.bind(this)}
           />
         </div>
       </div>

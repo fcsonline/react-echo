@@ -6,15 +6,14 @@ export default class If extends Operation {
   constructor(options) {
     super({
       name: 'if',
-      rotate: true,
       ...options
     })
 
     this.params = {
-      condition: new Parameter(this, 'bool', 'condition', 'top'),
-      a: new Parameter(this, 'integer', 'a', 'left'),
-      b: new Parameter(this, 'integer', 'b', 'right'),
-      result: new Parameter(this, 'bool', 'result', 'bottom'),
+      condition: new Parameter(this, 'bool', 'condition', 'top', false),
+      a: new Parameter(this, 'integer', 'a', 'left', false),
+      b: new Parameter(this, 'integer', 'b', 'right', false),
+      result: new Parameter(this, 'bool', 'result', 'bottom', true),
     };
 
     this.offsets = {

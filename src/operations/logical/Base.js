@@ -7,9 +7,9 @@ export default class Logical extends Operation {
     super(options)
 
     this.params = {
-      a: new Parameter(this, 'bool', 'a', 'left'),
-      b: new Parameter(this, 'bool', 'b', 'right'),
-      result: new Parameter(this, 'bool', 'result', 'bottom'),
+      a: new Parameter(this, 'bool', 'a', 'left', false),
+      b: new Parameter(this, 'bool', 'b', 'right', false),
+      result: new Parameter(this, 'bool', 'result', 'bottom', true),
     };
 
     this.offsets = {
