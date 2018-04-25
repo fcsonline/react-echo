@@ -1,42 +1,33 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {observer} from "mobx-react";
 import './InputView.css';
-import ParameterView from './ParameterView';
+import OperationView from './OperationView';
 
-class InputView extends Component {
+class InputView extends OperationView {
   onChange(event) {
-    const { input: operation } = this.props
+    const { operation } = this.props
     const output = operation.getParameter('result');
 
     output.value = +event.target.value;
   }
 
-  renderParameter (parameter) {
-    const { input: operation } = this.props
+  renderContent () {
+    const { operation } = this.props
 
     return (
-      <ParameterView
-        key={`${operation.id}-${parameter.id}`}
-        parameter={parameter}
-      />
-    )
-  }
-
-  render() {
-    const { input: operation } = this.props
-
-    return [
-      <rect className="InputView" x={operation.x} y={operation.y} width="120" height="80" rx="5" ry="5" />,
-      ...Object.values(operation.params).map(this.renderParameter.bind(this)),
-      <text x={operation.x} y={operation.y} fontFamily="Sans-serif" fontSize="15">
-        {operation.name}
-      </text>,
-      <foreignObject x={operation.x + 20} y={operation.y + 20} width="80" height="60">
+      <foreignObject x={operation.x + 10} y={operation.y + 10} width="40" height="40">
         <div xmlns="http://www.w3.org/1999/xhtml">
-        <input type="text" name="name" pattern="[0-9]*" onChange={this.onChange.bind(this)} />
+          <input
+            type="text"
+            name="name"
+            placeholder={operation.name}
+            pattern="[0-9]*"
+            onChange={this.onChange.bind(this)}
+            style={ { textAlign: 'center' }}
+          />
         </div>
       </foreignObject>
-    ];
+    );
   }
 }
 

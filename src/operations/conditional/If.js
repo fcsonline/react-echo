@@ -6,6 +6,7 @@ export default class If extends Operation {
   constructor(options) {
     super({
       name: 'if',
+      rotate: true,
       ...options
     })
 

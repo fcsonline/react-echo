@@ -7,6 +7,7 @@ import Catalog from './operations/Catalog';
 
 import Clock from './operations/other/Clock';
 import Counter from './operations/other/Counter';
+import Input from './operations/other/Input';
 
 import Sum from './operations/arithmetic/Sum';
 import Multiply from './operations/arithmetic/Multiply';
@@ -72,9 +73,18 @@ class App extends Component {
     return () => this.objects.push(builder());
   }
 
-  removeObjects(objects) {
-    objects.forEach((object) => {
-      this.objects.splice(this.objects.indexOf(object), 1);
+  removeObjects(operations) {
+    const connections = this.objects.filter((item) => {
+      return item.constructor.name === 'Connection' && (operations.includes(item.input.operation) || operations.includes(item.output.operation));
+    });
+
+    connections.forEach((connection) => {
+      this.objects.splice(this.objects.indexOf(connection), 1);
+      connection.output.value = 0;
+    });
+
+    operations.forEach((operation) => {
+      this.objects.splice(this.objects.indexOf(operation), 1);
     });
   }
 
@@ -87,36 +97,48 @@ class App extends Component {
     return (
       <div className="App">
         <header className="Toolbar">
-          <h1 className="Title">Welcome to react-echo</h1>
           <button onClick={this.onClickSerialize.bind(this)}>Save</button>
           <button onClick={this.onClickRestore.bind(this)}>Restore</button>
           <button onClick={this.onClickExample.bind(this)}>Example</button>
           <div className="Operations">
 
-            <h2 className="Title">Arithmetic</h2>
-            <button onClick={this.onClickOperation(() => new Sum()).bind(this)}>+</button>
-            <button onClick={this.onClickOperation(() => new Subtract()).bind(this)}>-</button>
-            <button onClick={this.onClickOperation(() => new Multiply()).bind(this)}>x</button>
-            <button onClick={this.onClickOperation(() => new Pow()).bind(this)}>^</button>
+            <div className="Block">
+              <h2 className="Title">Arithmetic</h2>
+              <button onClick={this.onClickOperation(() => new Sum()).bind(this)}>+</button>
+              <button onClick={this.onClickOperation(() => new Subtract()).bind(this)}>-</button>
+              <button onClick={this.onClickOperation(() => new Multiply()).bind(this)}>x</button>
+              <button onClick={this.onClickOperation(() => new Pow()).bind(this)}>^</button>
+            </div>
 
-            <h2 className="Title">Logical</h2>
-            <button onClick={this.onClickOperation(() => new And()).bind(this)}>&</button>
-            <button onClick={this.onClickOperation(() => new Or()).bind(this)}>|</button>
+            <div className="Block">
+              <h2 className="Title">Logical</h2>
+              <button onClick={this.onClickOperation(() => new And()).bind(this)}>&</button>
+              <button onClick={this.onClickOperation(() => new Or()).bind(this)}>|</button>
+            </div>
 
-            <h2 className="Title">Conditional</h2>
-            <button onClick={this.onClickOperation(() => new If()).bind(this)}>if</button>
+            <div className="Block">
+              <h2 className="Title">Conditional</h2>
+              <button onClick={this.onClickOperation(() => new If()).bind(this)}>if</button>
+            </div>
 
-            <h2 className="Title">Constants</h2>
-            <button onClick={this.onClickOperation(() => new Pi()).bind(this)}>π</button>
-            <button onClick={this.onClickOperation(() => new E()).bind(this)}>e</button>
+            <div className="Block">
+              <h2 className="Title">Constants</h2>
+              <button onClick={this.onClickOperation(() => new Pi()).bind(this)}>π</button>
+              <button onClick={this.onClickOperation(() => new E()).bind(this)}>e</button>
+            </div>
 
-            <h2 className="Title">Relational</h2>
-            <button onClick={this.onClickOperation(() => new Greater()).bind(this)}>&gt;</button>
-            <button onClick={this.onClickOperation(() => new Less()).bind(this)}>&lt;</button>
+            <div className="Block">
+              <h2 className="Title">Relational</h2>
+              <button onClick={this.onClickOperation(() => new Greater()).bind(this)}>&gt;</button>
+              <button onClick={this.onClickOperation(() => new Less()).bind(this)}>&lt;</button>
+            </div>
 
-            <h2 className="Title">Other</h2>
-            <button onClick={this.onClickOperation(() => new Clock()).bind(this)}>⌛</button>
-            <button onClick={this.onClickOperation(() => new Counter()).bind(this)}>⠇</button>
+            <div className="Block">
+              <h2 className="Title">Other</h2>
+              <button onClick={this.onClickOperation(() => new Clock()).bind(this)}>⌛</button>
+              <button onClick={this.onClickOperation(() => new Counter()).bind(this)}>⠇</button>
+              <button onClick={this.onClickOperation(() => new Input()).bind(this)}>In</button>
+            </div>
           </div>
         </header>
         <div className="Wrapper">

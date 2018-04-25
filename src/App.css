@@ -3,11 +3,7 @@
   width: 100vw;
   height: 100vh;
   display: flex;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+  flex-direction: column;
 }
 
 .Toolbar {
@@ -21,7 +17,12 @@ h1.Title {
 }
 
 h2.Title {
+  text-align: left;
   font-size: 13px;
+}
+
+.Operations {
+  display: flex;
 }
 
 .Operations button {
@@ -33,13 +34,14 @@ h2.Title {
   font-weight: 500;
 }
 
+.Operations .Block {
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+}
+
 .Wrapper {
   display: flex;
   padding: 10px;
   flex: 1 1 auto;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }

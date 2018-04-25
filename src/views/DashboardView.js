@@ -4,7 +4,6 @@ import './DashboardView.css';
 
 import Operation from '../lib/Operation';
 import Connection from '../lib/Connection';
-import Input from '../operations/other/Input';
 
 import InputView from './InputView';
 import ConnectionView from './ConnectionView';
@@ -37,7 +36,10 @@ class DashboardView extends Component {
 
       if (input.operation === parameter.operation) return;
 
-      if (input !== output) {
+      const valid = Connection.valid({ input, output });
+
+
+      if (input !== output && valid) {
         this.props.addObject(new Connection({
           input,
           output,
@@ -119,6 +121,9 @@ class DashboardView extends Component {
   onKeyDown (e) {
     const { active } = this.state;
 
+    // TODO: Review propagation in InputView
+    if (e.target.tagName === 'INPUT') return
+
     if (e.code === 'Backspace' || e.code === 'Delete') {
       this.props.removeObjects(active);
     }
@@ -132,9 +137,12 @@ class DashboardView extends Component {
 
   renderOperation (operation) {
     const { active, fromParameter } = this.state;
+    const View = {
+      Input: InputView
+    }[operation.constructor.name] || OperationView;
 
     return (
-      <OperationView
+      <View
         key={operation.id}
         operation={operation}
         point={this.pt}
@@ -142,16 +150,6 @@ class DashboardView extends Component {
         active={active.includes(operation)}
         onClick={this.onClickObject.bind(this)}
         onParameterClick={this.onParameterClick.bind(this)}
-      />
-    );
-  }
-
-  renderInput(input) {
-    return (
-      <InputView
-        key={input.id}
-        input={input}
-        point={this.pt}
       />
     );
   }
@@ -204,9 +202,8 @@ class DashboardView extends Component {
 
   render() {
     const { objects } = this.props;
-    const operations = objects.filter((o) => (o instanceof Operation && !(o instanceof Input))); // TODO improve
+    const operations = objects.filter((o) => (o instanceof Operation));
     const connections = objects.filter((o) => o instanceof Connection);
-    const inputs = objects.filter((o) => o instanceof Input);
 
     return (
       <div className="Dashboard">
@@ -224,7 +221,6 @@ class DashboardView extends Component {
           </defs>
 
           {operations.map(this.renderOperation.bind(this))}
-          {inputs.map(this.renderInput.bind(this))}
           {connections.map(this.renderConnection.bind(this))}
           {this.renderSelection()}
           {this.renderNewConnection()}

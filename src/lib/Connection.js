@@ -4,10 +4,6 @@ import uniqid from 'uniqid';
 
 class Connection {
   constructor({ input, output }) {
-    if (input.type !== output.type && output.type !== 'signal') {
-      throw new Error('incompatible type for connection');
-    }
-
     this.id = uniqid();
     this.input = input;
     this.output = output;
@@ -32,6 +28,10 @@ class Connection {
       output_operation_id: this.output.operation.id,
       output_parameter_name: this.output.name,
     }
+  }
+
+  static valid ({ input, output }) {
+    return input.type === output.type || output.type === 'signal';
   }
 
   static unserialize (data, finder) {

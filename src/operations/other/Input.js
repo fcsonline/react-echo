@@ -4,14 +4,17 @@ import Operation from '../../lib/Operation';
 
 class Input extends Operation {
   constructor(options) {
-    super(options)
+    super({
+      name: 'In',
+      ...options
+    })
 
     this.params = {
       result: new Parameter(this, 'integer', 'result', 'bottom', true)
     };
 
     this.offsets = {
-      result: { x: 60, y: 80},
+      result: { x: 30, y: 60},
     };
 
     this.updateParameterPositions();

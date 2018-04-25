@@ -16,6 +16,7 @@ class OperationView extends Component {
   }
 
   handleMouseDown (e) {
+    console.log('Down')
     e.stopPropagation();
 
     const { point: pt } = this.props;
@@ -34,6 +35,7 @@ class OperationView extends Component {
   };
 
   handleMouseUp (e) {
+    console.log('Up')
     e.stopPropagation();
 
     const { operation } = this.props
@@ -76,27 +78,16 @@ class OperationView extends Component {
     )
   }
 
-  render() {
-    const { operation, onClick, active } = this.props
-    const computing = operation.computing;
+  renderParameters () {
+    const { operation } = this.props
 
-    return [
-      <rect
-        ref="operation"
-        key={'rect' + operation.id}
-        onClick={() => onClick(operation)}
-        onMouseDown={this.handleMouseDown.bind(this)}
-        onMouseUp={this.handleMouseUp.bind(this)}
-        className={`Operation ${active ? ' OperationActive': ''} ${computing ? ' OperationComputing': ''}`}
-        x={operation.x}
-        y={operation.y}
-        width="60"
-        height="60"
-        rx="5"
-        ry="5"
-        transform={operation.rotate ? `rotate(45 ${operation.x + 30} ${operation.y + 30})` : ''}
-      />,
-      ...Object.values(operation.params).map(this.renderParameter),
+    return Object.values(operation.params).map(this.renderParameter);
+  }
+
+  renderContent () {
+    const { operation } = this.props
+
+    return (
       <text
         key={'text' + operation.id}
         className="OperationText"
@@ -107,7 +98,35 @@ class OperationView extends Component {
       >
         {operation.name}
       </text>
-    ];
+    );
+  }
+
+  render() {
+    const { operation, onClick, active } = this.props
+    const computing = operation.computing;
+
+    return (
+      <g
+        ref="operation"
+        key={'rect' + operation.id}
+        onClick={() => onClick(operation)}
+        onMouseDown={this.handleMouseDown.bind(this)}
+        onMouseUp={this.handleMouseUp.bind(this)}
+      >
+        <rect
+          className={`Operation ${active ? ' OperationActive': ''} ${computing ? ' OperationComputing': ''}`}
+          x={operation.x}
+          y={operation.y}
+          width="60"
+          height="60"
+          rx="5"
+          ry="5"
+          transform={operation.rotate ? `rotate(45 ${operation.x + 30} ${operation.y + 30})` : ''}
+        />
+        {this.renderParameters()}
+        {this.renderContent()}
+      </g>
+    );
   }
 }
 
